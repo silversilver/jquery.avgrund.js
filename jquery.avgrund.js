@@ -4,6 +4,10 @@
  *
  *  (c) 2012-2013 http://pixelhunter.me/
  *  MIT licensed
+ *
+ *  Added a callback option. I needed a way to remove the template HTML in a timely manner from the page so I didn't have dupe code / form elements etc.
+ *  Can now .empty() or .remove() the HTML inside the callback without troubles.
+ *
  */
 
 (function ($) {
@@ -23,7 +27,8 @@
 			setEvent: 'click',
 			onLoad: false,
 			onUnload: false,
-			template: '<p>This is test popin content!</p>'
+			template: '<p>This is test popin content!</p>',
+			cb: function(){}	// new
 		};
 
 		options = $.extend(defaults, options);
@@ -41,6 +46,8 @@
 			if (options.onBlurContainer !== '') {
 				$(options.onBlurContainer).addClass('avgrund-blur');
 			}
+
+			options.cb();		// new and hopefully should be initalized by now
 
 			function onDocumentKeyup (e) {
 				if (options.closeByEscape) {
